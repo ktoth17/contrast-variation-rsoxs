@@ -1,4 +1,4 @@
-# example/refraction.py
+# example/refraction.py from https://nsls-ii.github.io/scientific-python-cookiecutter
 
 import numpy as np
 

@@ -16,6 +16,9 @@ contrast_variation_rsoxs.egg-info/requires.txt
 contrast_variation_rsoxs.egg-info/top_level.txt
 cvworkflow/__init__.py
 cvworkflow/_version.py
+cvworkflow/cvfunctions.py
+cvworkflow/filefunctions.py
+cvworkflow/kkcalcfunctions.py
 cvworkflow/refraction.py
 docs/Makefile
 docs/make.bat

@@ -47,7 +47,7 @@ def kkcalc_convert(file_path, *, chemical_formula, density, min_ev, max_ev, load
     --------
     Calculate the complex index of refraction of polystrene (PS) from the NEXAFS of PS given from a txt file.
 
-    >>> kkcalc_convert(file_path, *, chemical_formula= 'C8H8', density = 1.05, min_ev=270, max_ev=325, )
+    >>> kkcalc_convert(file_path, *, chemical_formula= 'C8H8', density = 1.05, min_ev=270, max_ev=325)
 
     """
 
@@ -77,7 +77,7 @@ def kkcalc_plot(delta, beta, *, label, min_ev, max_ev):
     plt.plot(delta[:, 0], delta[:, 1], label=label, color = 'r')
     plt.legend()
     plt.xlim(min_ev, max_ev)
-    #plt.ylim(-0.007, 0.004)
+    plt.ylim(-0.007, 0.004)
     plt.title('{:d} eV - {:d} eV'.format(min_ev, max_ev),fontsize=16)
     plt.xlabel('Energy [eV]',fontsize=16)
     plt.ylabel(r'$\delta$',fontsize=16)
@@ -87,7 +87,7 @@ def kkcalc_plot(delta, beta, *, label, min_ev, max_ev):
     plt.plot(beta[:, 0], beta[:, 1], label=label, color = 'b')
     plt.legend()
     plt.xlim(min_ev, max_ev)
-    #plt.ylim(0, 0.009)
+    plt.ylim(0, 0.009)
     plt.title('{:d} eV - {:d} eV'.format(min_ev, max_ev),fontsize=16)
     plt.xlabel('Energy [eV]',fontsize=16)
     plt.ylabel(r'$\beta$',fontsize=16)

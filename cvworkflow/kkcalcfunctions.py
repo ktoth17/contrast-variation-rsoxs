@@ -2,7 +2,7 @@
 
 import kkcalc
 from kkcalc import data
-from kkclc import kk
+from kkcalc import kk
 
 import numpy as np
 import pandas as pd

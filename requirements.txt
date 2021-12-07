@@ -6,12 +6,5 @@ pandas
 seaborn
 matplotlib
 scipy
-timeit
-pathlib
-warnings
-itertools
-re
-os
-sys
 constrained-matrix-factorization
 kkcalc

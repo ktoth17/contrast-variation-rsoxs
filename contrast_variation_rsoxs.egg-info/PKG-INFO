@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: contrast-variation-rsoxs
+Version: 0.post7+g4fd6f21
+Summary: Resonant Soft X-ray Scattering (RSoXS) for the Extraction of Partial Scattering Functions of Multicomponent Soft Matter Systems
+Home-page: https://github.com/ktoth17/contrast-variation-rsoxs
+Author: Kristof Toth
+Author-email: kristof.toth@nist.gov
+License: BSD (3-clause)
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+License-File: LICENSE
+License-File: AUTHORS.rst
+
+=================================================
+Contrast Variation Resonant Soft X-ray Scattering
+=================================================
+
+.. image:: https://img.shields.io/travis/ktoth17/contrast-variation-rsoxs.svg
+        :target: https://travis-ci.org/ktoth17/contrast-variation-rsoxs
+
+.. image:: https://img.shields.io/pypi/v/contrast-variation-rsoxs.svg
+        :target: https://pypi.python.org/pypi/contrast-variation-rsoxs
+
+
+Resonant Soft X-ray Scattering (RSoXS) for the Extraction of Partial Scattering Functions of Multicomponent Soft Matter Systems
+
+* Free software: 3-clause BSD license
+* Documentation: (COMING SOON!) https://ktoth17.github.io/contrast-variation-rsoxs
+
+Features
+--------
+
+* TODO
+
+

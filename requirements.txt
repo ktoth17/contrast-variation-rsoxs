@@ -1,1 +1,17 @@
 # List required packages in this file, one per line.
+torch
+numpy
+scipy
+pandas
+seaborn
+matplotlib
+scipy
+timeit
+pathlib
+warnings
+itertools
+re
+os
+sys
+constrained-matrix-factorization
+kkcalc

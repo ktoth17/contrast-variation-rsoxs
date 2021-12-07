@@ -12,7 +12,7 @@ Contrast Variation Resonant Soft X-ray Scattering
 Resonant Soft X-ray Scattering (RSoXS) for the Extraction of Partial Scattering Functions of Multicomponent Soft Matter Systems
 
 * Free software: 3-clause BSD license
-* Documentation: (COMING SOON!) https://ktoth17.github.io/contrast-variation-rsoxs.
+* Documentation: (COMING SOON!) https://ktoth17.github.io/contrast-variation-rsoxs
 
 Features
 --------

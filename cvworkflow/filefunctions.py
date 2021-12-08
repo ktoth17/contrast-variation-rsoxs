@@ -5,6 +5,7 @@ import os
 import re
 import numpy as np
 import pandas as pd
+import xarray as xr
 import scipy.optimize
 from scipy.optimize import curve_fit
 from scipy.integrate import odeint
@@ -95,6 +96,23 @@ def exp_func(q, para):
 
 def err(para,q,y):
     return abs(exp_func(q, para)-y)
+
+def plot_xr(df, xlim=(0.0005,0.007),ylim=(270, 310),vmin = 1, vmax=1000)
+    data_intensity = df.to_numpy()
+    data_intensity = np.nan_to_num(data_intensity)
+    data_intensity = np.swapaxes(data_intensity,0,1)
+
+    energies = df.columns
+    q_range = df.index
+
+    data_xr = xr.DataArray(data_intensity,dims=["energy","q"],
+                           coords=dict(
+                                energy=(["energy"], energies),
+                                q=(["q"], q_range),
+                            ),
+                )
+
+    return data_xr.plot(figsize = (10,10), xlim=xlim,ylim=ylim,vmin = vmin, vmax=vmax)
 
 def read_rsoxs_currents(path, scan_id,exposure_time=2,time_avg_width=1, min_ev=270.1, max_ev=330):
     # read primary csv for energies, need to add it outside the scan_id folder

@@ -97,7 +97,7 @@ def exp_func(q, para):
 def err(para,q,y):
     return abs(exp_func(q, para)-y)
 
-def plot_xr(df, xlim=(0.0005,0.007),ylim=(270, 310),vmin = 1, vmax=1000)
+def plot_xr(df, xlim=(0.0005,0.007),ylim=(270, 310),vmin = 1, vmax=1000):
     data_intensity = df.to_numpy()
     data_intensity = np.nan_to_num(data_intensity)
     data_intensity = np.swapaxes(data_intensity,0,1)

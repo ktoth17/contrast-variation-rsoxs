@@ -108,7 +108,7 @@ def component_df(delta, beta, new_q_index, label):
 
     return delta_df_new, beta_df_new
 
-def make_contrast_df(delta1, beta1, label1, delta2, beta2, label2, delta3, beta3, label3):
+def make_contrast_M(delta1, beta1, label1, delta2, beta2, label2, delta3, beta3, label3, new_q_index):
     delta_label1 = 'delta_'+label1
     delta_label2 = 'delta_'+label2
     delta_label3 = 'delta_'+label3
@@ -116,12 +116,16 @@ def make_contrast_df(delta1, beta1, label1, delta2, beta2, label2, delta3, beta3
     beta_label2 = 'beta_'+label2
     beta_label3 = 'beta_'+label3
 
+    delta1_df, beta1_df = component_df(delta1, beta1, new_q_index, label1)
+    delta2_df, beta2_df = component_df(delta2, beta2, new_q_index, label2)
+    delta3_df, beta3_df = component_df(delta3, beta3, new_q_index, label3)
+
     index_df = pd.DataFrame(delta1, columns=[delta_label1])
-    index_df.insert(1, delta_label2, delta2, True)
-    index_df.insert(2, delta_label3, delta3, True)
-    index_df.insert(3, beta_label1, beta1, True)
-    index_df.insert(4, beta_label2, beta2, True)
-    index_df.insert(5, beta_label3, beta3, True)
+    index_df.insert(1, delta_label2, delta2_df, True)
+    index_df.insert(2, delta_label3, delta3_df, True)
+    index_df.insert(3, beta_label1, beta1_df, True)
+    index_df.insert(4, beta_label2, beta2_df, True)
+    index_df.insert(5, beta_label3, beta3_df, True)
 
     contrast_df = index_df.copy(deep=True)
     contrast_df.columns =['S11', 'S22','S33','S12','S13','S23']

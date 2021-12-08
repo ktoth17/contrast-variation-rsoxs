@@ -2,6 +2,7 @@
 
 import pathlib
 import os
+import re
 import numpy as np
 import pandas as pd
 import scipy.optimize
@@ -11,7 +12,7 @@ from scipy.interpolate import griddata
 from scipy import stats
 from scipy import interpolate
 
-def read_rsoxs_data(dataPath, new_q_intervals=300):
+def read_rsoxs_data(dataPath, reg, new_q_intervals=300):
     nfiles = os.listdir(dataPath)
     n_files = len(nfiles)
 

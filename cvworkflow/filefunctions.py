@@ -2,6 +2,90 @@
 
 import numpy as np
 import pandas as pd
+import scipy.optimize
+from scipy.optimize import curve_fit
+from scipy.integrate import odeint
+from scipy.interpolate import griddata
+from scipy import stats
+from scipy import interpolate
+
+def read_rsoxs_data(dataPath, new_q)
+    nfiles = os.listdir(dataPath)
+    n_files = len(nfiles)
+
+    #Read in the files in the folder (in .dat format)
+    df_list = []
+    for file in sorted(dataPath.glob('*dat'),key=lambda x: float(reg.search(str(x)).groups()[0])):  #Used to be 'ISV*dat'
+        #energy = float(reg.search(str(file)).groups()[0].replace('p','.'))
+        energy = float(reg.search(str(file)).groups()[0])
+        sdf_np = np.loadtxt(file) #load in the data from .dat IgorPro files
+        sdf_all = pd.DataFrame(sdf_np) #convert to pandas Dataframe
+        sdf_all.columns = ['q','I','unk1','unk2'] #all columns
+
+        sdf = sdf_all[['q', 'I']].copy() #new dataframe with only q and I
+        sdf = sdf.set_index('q').squeeze()
+        # Double normalization:
+        #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
+        #sdf = sdf/norm
+        df_list.append(sdf)
+
+    # Interpolate scattering data onto a common grid
+    new_df_list = []
+    n_files = len(df_list)
+    for sdf in df_list:
+        nsdf = (sdf
+                .reindex(sdf.index.union(new_q))
+                .interpolate(method='linear')
+                .reindex(new_q)
+               )
+        new_df_list.append(nsdf)
+    df = pd.concat(new_df_list,axis=1)
+
+    xrf_fit_values=xrf_subtraction(df)
+
+    new_df_list_xrf = []
+    i = 0
+    for sdf in df_list:
+        nsdf = (sdf
+                .reindex(sdf.index.union(new_q))
+                .interpolate(method='linear')
+                .reindex(new_q)
+               )
+        #Subtracting X-ray fluorescence
+        if nsdf.name > 283.9:
+            nsdf = nsdf - xrf_fit_values[i]
+        # Double normalization:
+        #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
+        #nsdf = nsdf/norm
+        new_df_list_xrf.append(nsdf)
+        i = i+1
+
+    df_xrf = pd.concat(new_df_list_xrf,axis=1)
+
+    return df_xrf
+
+def xrf_subtraction(df, iq_start = 200,iq_end = 300,range_len=55)
+    # number 10 is 280 eV, number 55 is 310 eV
+    # above 0.1 nm^-1
+    q_values = df.iloc[iq_start:iq_end,10].index.to_numpy()
+
+    xrf_fit_values = []
+    xrf_fit_A_values = []
+    for i in range(range_len):  #use 61 for ISV data!!
+        intensity = df.iloc[iq_start:iq_end,i].to_numpy()
+        init_guess = [1, 0]
+        para_best, ier = scipy.optimize.leastsq(err, init_guess, args=(q_values,intensity))
+        xrf_fit_values.append(para_best[1])
+        xrf_fit_A_values.append(para_best[0])
+    return xrf_fit_values
+
+# Exponential function
+def exp_func(q, para):
+    A, C = para
+    return A * q**(-3.7) + C
+
+def err(para,q,y):
+    return abs(exp_func(q, para)-y)
 
 def read_rsoxs_currents(path, scan_id,exposure_time=2,time_avg_width=1, min_ev=270.1, max_ev=330):
     # read primary csv for energies, need to add it outside the scan_id folder

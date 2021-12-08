@@ -27,6 +27,7 @@ def read_rsoxs_data(dataPath, reg, new_q_intervals=300):
 
         sdf = sdf_all[['q', 'I']].copy() #new dataframe with only q and I
         sdf = sdf.set_index('q').squeeze()
+        sdf.name = energy
         # Double normalization:
         #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
         #sdf = sdf/norm
@@ -61,6 +62,7 @@ def read_rsoxs_data(dataPath, reg, new_q_intervals=300):
         #Subtracting X-ray fluorescence
         if float(nsdf.name) > 283.9:
             nsdf = nsdf - xrf_fit_values[i]
+
         # Double normalization:
         #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
         #nsdf = nsdf/norm

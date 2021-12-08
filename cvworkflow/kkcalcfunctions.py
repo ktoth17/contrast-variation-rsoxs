@@ -109,26 +109,33 @@ def component_df(delta, beta, new_q_index, label):
     return delta_df_new, beta_df_new
 
 def make_contrast_df(delta1, beta1, label1, delta2, beta2, label2, delta3, beta3, label3):
-    index_df = pd.DataFrame(delta1, columns=['delta_'+label1])
-    index_df.insert(1, 'delta_'+label2, delta2, True)
-    index_df.insert(2, 'delta_'+label3, delta3, True)
-    index_df.insert(3, 'beta_'+label1, beta1, True)
-    index_df.insert(4, 'beta_'+label2, beta2, True)
-    index_df.insert(5, 'beta_'+label3, beta3, True)
+    delta_label1 = 'delta_'+label1
+    delta_label2 = 'delta_'+label2
+    delta_label3 = 'delta_'+label3
+    beta_label1 = 'beta_'+label1
+    beta_label2 = 'beta_'+label2
+    beta_label3 = 'beta_'+label3
+
+    index_df = pd.DataFrame(delta1, columns=[delta_label1])
+    index_df.insert(1, delta_label2, delta2, True)
+    index_df.insert(2, delta_label3, delta3, True)
+    index_df.insert(3, beta_label1, beta1, True)
+    index_df.insert(4, beta_label2, beta2, True)
+    index_df.insert(5, beta_label3, beta3, True)
 
     contrast_df = index_df.copy(deep=True)
     contrast_df.columns =['S11', 'S22','S33','S12','S13','S23']
     energy_fourth_term = contrast_df.index.values**4
 
     # Self term: delta_i^2 + beta_i^2
-    contrast_df['S11']=(index_df['delta_'+label1]*index_df['delta_'+label1]+index_df['beta_'+label1]*index_df['beta_'+label1])*(energy_fourth_term)
-    contrast_df['S22']=(index_df['delta_'+label2]*index_df['delta_'+label2]+index_df['beta_'+label2]*index_df['beta_'+label2])*(energy_fourth_term)
-    contrast_df['S33']=(index_df['delta_'+label3]*index_df['delta_'+label3]+index_df['beta_'+label3]*index_df['beta_'+label3])*(energy_fourth_term)
+    contrast_df['S11']=(index_df[delta_label1]*index_df[delta_label1]+index_df[beta_label1]*index_df[beta_label1])*(energy_fourth_term)
+    contrast_df['S22']=(index_df[delta_label2]*index_df[delta_label2]+index_df[beta_label2]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S33']=(index_df[delta_label3]*index_df[delta_label3]+index_df[beta_label3]*index_df[beta_label3])*(energy_fourth_term)
 
     # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
-    contrast_df['S12']=2*(index_df['delta_'+label1]*index_df['delta_'+label2]+index_df['beta_'+label1]*index_df['beta_'+label2])*(energy_fourth_term)
-    contrast_df['S13']=2*(index_df['delta_'+label1]*index_df['delta_'+label3]+index_df['beta_'+label1]*index_df['beta_'+label3])*(energy_fourth_term)
-    contrast_df['S23']=2*(index_df['delta_'+label2]*index_df['delta_'+label3]+index_df['beta_'+label2]*index_df['beta_'+label3])*(energy_fourth_term)
+    contrast_df['S12']=2*(index_df[delta_label1]*index_df[delta_label2]+index_df[beta_label1]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S13']=2*(index_df[delta_label1]*index_df[delta_label3]+index_df[beta_label1]*index_df[beta_label3])*(energy_fourth_term)
+    contrast_df['S23']=2*(index_df[delta_label2]*index_df[delta_label3]+index_df[beta_label2]*index_df[beta_label3])*(energy_fourth_term)
 
     #Make transfer matrix M
     M = []

@@ -73,10 +73,10 @@ def kkcalc_convert(file_path, *, chemical_formula, density, min_ev, max_ev, load
     return delta, beta
 
 def kkcalc_plot(delta, beta, *, label, min_ev, max_ev):
-    min_beta = min(beta[:,1])
-    max_beta = max(beta[:,1])
-    min_delta = min(delta[:,1])
-    max_delta = max(delta[:,1])
+    min_beta = min(beta[200:300,1])
+    max_beta = max(beta[200:300,1])
+    min_delta = min(delta[200:300,1])
+    max_delta = max(delta[200:300,1])
     plt.figure()
     plt.plot(delta[:, 0], delta[:, 1], label=label, color = 'r')
     plt.legend()

@@ -120,7 +120,7 @@ def make_contrast_M(delta1, beta1, label1, delta2, beta2, label2, delta3, beta3,
     delta2_df, beta2_df = component_df(delta2, beta2, new_q_index, label2)
     delta3_df, beta3_df = component_df(delta3, beta3, new_q_index, label3)
 
-    index_df = pd.DataFrame(delta1, columns=[delta_label1])
+    index_df = pd.DataFrame(delta1_df, columns=[delta_label1])
     index_df.insert(1, delta_label2, delta2_df, True)
     index_df.insert(2, delta_label3, delta3_df, True)
     index_df.insert(3, beta_label1, beta1_df, True)

@@ -9,7 +9,7 @@ from scipy.interpolate import griddata
 from scipy import stats
 from scipy import interpolate
 
-def read_rsoxs_data(dataPath, new_q)
+def read_rsoxs_data(dataPath, new_q):
     nfiles = os.listdir(dataPath)
     n_files = len(nfiles)
 
@@ -64,7 +64,7 @@ def read_rsoxs_data(dataPath, new_q)
 
     return df_xrf
 
-def xrf_subtraction(df, iq_start = 200,iq_end = 300,range_len=55)
+def xrf_subtraction(df, iq_start = 200,iq_end = 300,range_len=55):
     # number 10 is 280 eV, number 55 is 310 eV
     # above 0.1 nm^-1
     q_values = df.iloc[iq_start:iq_end,10].index.to_numpy()

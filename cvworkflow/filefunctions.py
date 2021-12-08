@@ -10,7 +10,7 @@ from scipy.interpolate import griddata
 from scipy import stats
 from scipy import interpolate
 
-def read_rsoxs_data(dataPath, new_q):
+def read_rsoxs_data(dataPath, new_q_intervals=300):
     nfiles = os.listdir(dataPath)
     n_files = len(nfiles)
 
@@ -29,6 +29,10 @@ def read_rsoxs_data(dataPath, new_q):
         #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
         #sdf = sdf/norm
         df_list.append(sdf)
+    min_q = max([sdf.index.min() for sdf in df_list])
+    max_q = min([sdf.index.max() for sdf in df_list])
+
+    new_q = np.geomspace(min_q,max_q,new_q_intervals)
 
     # Interpolate scattering data onto a common grid
     new_df_list = []

@@ -96,3 +96,55 @@ def kkcalc_plot(delta, beta, *, label, min_ev, max_ev):
     plt.xlabel('Energy [eV]',fontsize=16)
     plt.ylabel(r'$\beta$',fontsize=16)
     plt.show()
+
+def component_df(delta, beta, new_q_index, label):
+    delta_df = pd.DataFrame(delta[:, 1], columns=['delta_'+label])
+    delta_df = delta_df.set_axis(delta[:, 0], axis=0)
+    delta_df_new = (delta_df.reindex(delta_df.index.union(new_q_index)).interpolate(method='linear').reindex(new_q_index))
+
+    beta_df = pd.DataFrame(beta[:, 1], columns=['beta_'+label])
+    beta_df = beta_df.set_axis(beta[:, 0], axis=0)
+    beta_df_new = (beta_df.reindex(beta_df.index.union(new_q_index)).interpolate(method='linear').reindex(new_q_index))
+
+    return delta_df_new, beta_df_new
+
+def make_contrast_df(delta1, beta1, label1, delta2, beta2, label2, delta3, beta3, label3):
+    index_df = pd.DataFrame(delta1, columns=['delta_'+label1])
+    index_df.insert(1, 'delta_'+label2, delta2, True)
+    index_df.insert(2, 'delta_'+label3, delta3, True)
+    index_df.insert(3, 'beta_'+label1, beta1, True)
+    index_df.insert(4, 'beta_'+label2, beta2, True)
+    index_df.insert(5, 'beta_'+label3, beta3, True)
+
+    contrast_df = index_df.copy(deep=True)
+    contrast_df.columns =['S11', 'S22','S33','S12','S13','S23']
+    energy_fourth_term = contrast_df.index.values**4
+
+    # Self term: delta_i^2 + beta_i^2
+    contrast_df['S11']=(index_df['delta_'+label1]*index_df['delta_'+label1]+index_df['beta_'+label1]*index_df['beta_'+label1])*(energy_fourth_term)
+    contrast_df['S22']=(index_df['delta_'+label2]*index_df['delta_'+label2]+index_df['beta_'+label2]*index_df['beta_'+label2])*(energy_fourth_term)
+    contrast_df['S33']=(index_df['delta_'+label3]*index_df['delta_'+label3]+index_df['beta_'+label3]*index_df['beta_'+label3])*(energy_fourth_term)
+
+    # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
+    contrast_df['S12']=2*(index_df['delta_'+label1]*index_df['delta_'+label2]+index_df['beta_'+label1]*index_df['beta_'+label2])*(energy_fourth_term)
+    contrast_df['S13']=2*(index_df['delta_'+label1]*index_df['delta_'+label3]+index_df['beta_'+label1]*index_df['beta_'+label3])*(energy_fourth_term)
+    contrast_df['S23']=2*(index_df['delta_'+label2]*index_df['delta_'+label3]+index_df['beta_'+label2]*index_df['beta_'+label3])*(energy_fourth_term)
+
+    #Make transfer matrix M
+    M = []
+    for energy,contrasts in contrast_df.iterrows():
+        row = []
+        row.append(contrasts['S11'])
+        row.append(contrasts['S22'])
+        row.append(contrasts['S33'])
+        row.append(contrasts['S12'])
+        row.append(contrasts['S13'])
+        row.append(contrasts['S23'])
+        M.append(row)
+    M = np.array(M)
+
+    #Make negative values 0 in scattering
+    M[M < 0] = 0
+    #Transpose to get columns of S11, S22, S33, S12, S13, S23
+    M = np.transpose(M)
+    return M

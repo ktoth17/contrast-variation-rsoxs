@@ -30,7 +30,7 @@ def kkcalc_convert(file_path, *, chemical_formula, density, min_ev, max_ev, load
     Parameters
     ----------
     file_path : pathlib.WindowsPath
-        Incident angle in radians.
+        File path to NEXAFS beta spreadsheet, csv or txt. 2 columns: energy and intensity.
     chemical_formula : string
         The chemical formula of the component, i.e. 'C8H8' for polystyrene.
     density : float

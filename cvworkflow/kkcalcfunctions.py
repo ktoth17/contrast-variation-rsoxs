@@ -168,9 +168,9 @@ def make_contrast_M_2(delta1, beta1, label1, delta2, beta2, label2, new_q_index)
         index_df = pd.DataFrame(delta1_df, columns=[delta_label1])
         index_df.insert(1, delta_label2, delta2_df, True)
         index_df.insert(2, beta_label1, beta1_df, True)
+        index_df.insert(3, beta_label2, beta2_df, True)
 
-
-        contrast_df = index_df.copy(deep=True)
+        contrast_df = index_df[[delta_label1, delta_label2, beta_label1]].copy(deep=True)
         contrast_df.columns =['S11','S22','S12']
         energy_fourth_term = contrast_df.index.values**4
 

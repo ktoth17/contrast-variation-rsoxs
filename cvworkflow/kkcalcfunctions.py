@@ -72,16 +72,12 @@ def kkcalc_convert(file_path, *, chemical_formula, density, min_ev, max_ev, load
 
     return delta, beta
 
-def kkcalc_plot(delta, beta, *, label, min_ev, max_ev):
-    min_beta = min(beta[200:300,1])
-    max_beta = max(beta[200:300,1])
-    min_delta = min(delta[200:300,1])
-    max_delta = max(delta[200:300,1])
+def kkcalc_plot(delta, beta, *, label, min_ev, max_ev, delta_ylim=[-0.006,0.004], beta_ylim=[0,0.008]):
     plt.figure()
     plt.plot(delta[:, 0], delta[:, 1], label=label, color = 'r')
     plt.legend()
     plt.xlim(min_ev, max_ev)
-    plt.ylim(0.9*min_delta, 1.1*max_delta)
+    plt.ylim(delta_ylim)
     plt.title('{:d} eV - {:d} eV'.format(min_ev, max_ev),fontsize=16)
     plt.xlabel('Energy [eV]',fontsize=16)
     plt.ylabel(r'$\delta$',fontsize=16)
@@ -91,7 +87,7 @@ def kkcalc_plot(delta, beta, *, label, min_ev, max_ev):
     plt.plot(beta[:, 0], beta[:, 1], label=label, color = 'b')
     plt.legend()
     plt.xlim(min_ev, max_ev)
-    plt.ylim(0.9*min_beta, 1.1*max_beta)
+    plt.ylim(beta_ylim)
     plt.title('{:d} eV - {:d} eV'.format(min_ev, max_ev),fontsize=16)
     plt.xlabel('Energy [eV]',fontsize=16)
     plt.ylabel(r'$\beta$',fontsize=16)

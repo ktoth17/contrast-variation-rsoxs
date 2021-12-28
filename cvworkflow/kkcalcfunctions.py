@@ -124,7 +124,7 @@ def make_contrast_M_3(delta1, beta1, label1, delta2, beta2, label2, delta3, beta
     index_df.insert(5, beta_label3, beta3_df, True)
 
     contrast_df = index_df.copy(deep=True)
-    contrast_df.columns =['S11', 'S22','S33','S12','S13','S23']
+    contrast_df.columns =['S11','S22','S33','S12','S13','S23']
     energy_fourth_term = contrast_df.index.values**4
 
     # Self term: delta_i^2 + beta_i^2
@@ -171,7 +171,7 @@ def make_contrast_M_2(delta1, beta1, label1, delta2, beta2, label2, new_q_index)
 
 
         contrast_df = index_df.copy(deep=True)
-        contrast_df.columns =['S11', 'S22','S12']
+        contrast_df.columns =['S11','S22','S12']
         energy_fourth_term = contrast_df.index.values**4
 
         # Self term: delta_i^2 + beta_i^2

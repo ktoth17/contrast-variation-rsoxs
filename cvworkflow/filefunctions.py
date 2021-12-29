@@ -33,17 +33,17 @@ def read_rsoxs_data(dataPath, reg, *, min_q = 0.0004, max_q = 0.007, new_q_inter
         #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
         #sdf = sdf/norm
         df_list.append(sdf)
-    #min_q = max([sdf.index.min() for sdf in df_list])
-    #max_q = min([sdf.index.max() for sdf in df_list])
+    min_q_pre = max([sdf.index.min() for sdf in df_list])
+    max_q_pre = min([sdf.index.max() for sdf in df_list])
 
-    new_q = np.geomspace(min_q,max_q,new_q_intervals)
+    new_q_pre = np.geomspace(min_q_pre,max_q_pre,new_q_intervals)
 
     # Interpolate scattering data onto a common grid
     new_df_list = []
     n_files = len(df_list)
     for sdf in df_list:
         nsdf = (sdf
-                .reindex(sdf.index.union(new_q))
+                .reindex(sdf.index.union(new_q_pre))
                 .interpolate(method='linear')
                 .reindex(new_q)
                )
@@ -52,6 +52,8 @@ def read_rsoxs_data(dataPath, reg, *, min_q = 0.0004, max_q = 0.007, new_q_inter
 
     xrf_fit_values=xrf_subtraction(df)
 
+    new_q = np.geomspace(min_q,max_q,new_q_intervals)
+    
     new_df_list_xrf = []
     i = 0
     for sdf in df_list:

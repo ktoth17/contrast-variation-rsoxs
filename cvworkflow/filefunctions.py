@@ -45,7 +45,7 @@ def read_rsoxs_data(dataPath, reg, *, min_q = 0.0004, max_q = 0.007, new_q_inter
         nsdf = (sdf
                 .reindex(sdf.index.union(new_q_pre))
                 .interpolate(method='linear')
-                .reindex(new_q)
+                .reindex(new_q_pre)
                )
         new_df_list.append(nsdf)
     df = pd.concat(new_df_list,axis=1)
@@ -53,7 +53,7 @@ def read_rsoxs_data(dataPath, reg, *, min_q = 0.0004, max_q = 0.007, new_q_inter
     xrf_fit_values=xrf_subtraction(df)
 
     new_q = np.geomspace(min_q,max_q,new_q_intervals)
-    
+
     new_df_list_xrf = []
     i = 0
     for sdf in df_list:

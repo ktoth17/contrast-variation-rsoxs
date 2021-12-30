@@ -99,7 +99,7 @@ def exp_func(q, para):
 def err(para,q,y):
     return abs(exp_func(q, para)-y)
 
-def plot_xr(df, *,xlim=(0.0005,0.007),ylim=(270, 310),vmin = 1, vmax=1000, **vargs):
+def plot_xr(df, *,xlim=(0.0005,0.007),ylim=(270, 310),vmin = 1, vmax=1000, **kwargs):
     data_intensity = df.to_numpy()
     data_intensity = np.nan_to_num(data_intensity)
     data_intensity = np.swapaxes(data_intensity,0,1)
@@ -114,7 +114,7 @@ def plot_xr(df, *,xlim=(0.0005,0.007),ylim=(270, 310),vmin = 1, vmax=1000, **var
                             ),
                 )
 
-    return data_xr.plot(figsize = (10,10), xlim=xlim,ylim=ylim,vmin = vmin, vmax=vmax, **vargs)
+    return data_xr.plot(figsize = (10,10), xlim=xlim,ylim=ylim,vmin = vmin, vmax=vmax, **kwargs)
 
 def read_rsoxs_currents(path, scan_id,exposure_time=2,time_avg_width=1, min_ev=270.1, max_ev=330):
     # read primary csv for energies, need to add it outside the scan_id folder

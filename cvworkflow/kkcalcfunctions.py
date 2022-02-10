@@ -151,7 +151,10 @@ def make_contrast_M_3(delta1, beta1, label1, delta2, beta2, label2, delta3, beta
     M = np.array(M)
 
     #Make negative values 0 in scattering
-    M[M < 0] = 0
+    #M[M < 0] = 0
+
+    #Scale up by lowest value
+    M = M-M.min()+1
     #Transpose to get columns of S11, S22, S33, S12, S13, S23
     M = np.transpose(M)
     return M
@@ -185,9 +188,9 @@ def make_contrast_M_3_v2(delta1, beta1, label1, delta2, beta2, label2, delta3, b
     contrast_df['S33']=((1-index_df[delta_label3])*(1-index_df[delta_label3])+index_df[beta_label3]*index_df[beta_label3])*(energy_fourth_term)
 
     # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
-    contrast_df['S12']=4*((1-index_df[delta_label1])*(1-index_df[delta_label2])+index_df[beta_label1]*index_df[beta_label2])*(energy_fourth_term)
-    contrast_df['S13']=4*((1-index_df[delta_label1])*(1-index_df[delta_label3])+index_df[beta_label1]*index_df[beta_label3])*(energy_fourth_term)
-    contrast_df['S23']=4*((1-index_df[delta_label2])*(1-index_df[delta_label3])+index_df[beta_label2]*index_df[beta_label3])*(energy_fourth_term)
+    contrast_df['S12']=2*((1-index_df[delta_label1])*(1-index_df[delta_label2])+index_df[beta_label1]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S13']=2*((1-index_df[delta_label1])*(1-index_df[delta_label3])+index_df[beta_label1]*index_df[beta_label3])*(energy_fourth_term)
+    contrast_df['S23']=2*((1-index_df[delta_label2])*(1-index_df[delta_label3])+index_df[beta_label2]*index_df[beta_label3])*(energy_fourth_term)
 
     #Make transfer matrix M
     M = []
@@ -272,7 +275,7 @@ def make_contrast_M_2_v2(delta1, beta1, label1, delta2, beta2, label2, new_q_ind
     contrast_df['S22']=((1-index_df[delta_label2])*(1-index_df[delta_label2])+index_df[beta_label2]*index_df[beta_label2])*(energy_fourth_term)
 
     # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
-    contrast_df['S12']=4*((1-index_df[delta_label1])*(1-index_df[delta_label2])+index_df[beta_label1]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S12']=2*((1-index_df[delta_label1])*(1-index_df[delta_label2])+index_df[beta_label1]*index_df[beta_label2])*(energy_fourth_term)
 
 
     #Make transfer matrix M

@@ -154,7 +154,7 @@ def make_contrast_M_3(delta1, beta1, label1, delta2, beta2, label2, delta3, beta
     #M[M < 0] = 0
 
     #Scale up by lowest value
-    M = M-M.min()+1
+    #M = M-M.min()+1
     #Transpose to get columns of S11, S22, S33, S12, S13, S23
     M = np.transpose(M)
     return M

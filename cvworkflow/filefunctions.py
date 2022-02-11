@@ -63,7 +63,7 @@ def read_rsoxs_data(dataPath, reg, *, min_q = 0.0004, max_q = 0.007, new_q_inter
                 .reindex(new_q)
                )
         #Subtracting X-ray fluorescence
-        if float(nsdf.name) > 283.9:
+        if float(nsdf.name) > 284.0:
             nsdf = nsdf - xrf_fit_values[i]
 
         # Double normalization:

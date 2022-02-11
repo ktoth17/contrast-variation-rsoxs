@@ -64,8 +64,10 @@ def read_rsoxs_data(dataPath, reg, *, min_q = 0.0004, max_q = 0.007, new_q_inter
                )
         #Subtracting X-ray fluorescence
         if float(nsdf.name) > 284.0:
+        try:
             nsdf = nsdf - xrf_fit_values[i]
-
+        except:
+            pass
         # Double normalization:
         #norm = au_mesh_avg[i]*(c_waxs_diode_avg[i]/c_au_mesh_avg[i])
         #nsdf = nsdf/norm

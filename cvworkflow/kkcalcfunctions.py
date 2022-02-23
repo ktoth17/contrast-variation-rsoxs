@@ -177,9 +177,9 @@ def make_contrast_M_3i(delta1, beta1, label1, delta2, beta2, label2, delta3, bet
     index_df.insert(3, beta_label1, beta1_df, True)
     index_df.insert(4, beta_label2, beta2_df, True)
     index_df.insert(5, beta_label3, beta3_df, True)
-    index_df.insert(6, beta_label1, beta1_df, True)
-    index_df.insert(7, beta_label2, beta2_df, True)
-    index_df.insert(8, beta_label3, beta3_df, True)
+    index_df.insert(6, beta_label1+'i', beta1_df, True)
+    index_df.insert(7, beta_label2+'i', beta2_df, True)
+    index_df.insert(8, beta_label3+'i', beta3_df, True)
 
     contrast_df = index_df.copy(deep=True)
     contrast_df.columns =['S11','S22','S33','S12','S13','S23','S12i','S13i','S23i']

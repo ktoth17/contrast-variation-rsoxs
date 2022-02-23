@@ -11,7 +11,6 @@ versioneer.py
 contrast_variation_rsoxs.egg-info/PKG-INFO
 contrast_variation_rsoxs.egg-info/SOURCES.txt
 contrast_variation_rsoxs.egg-info/dependency_links.txt
-contrast_variation_rsoxs.egg-info/entry_points.txt
 contrast_variation_rsoxs.egg-info/requires.txt
 contrast_variation_rsoxs.egg-info/top_level.txt
 cvworkflow/__init__.py

@@ -196,9 +196,9 @@ def make_contrast_M_3i(delta1, beta1, label1, delta2, beta2, label2, delta3, bet
     contrast_df['S23']=2*(index_df[delta_label2]*index_df[delta_label3]+index_df[beta_label2]*index_df[beta_label3])*(energy_fourth_term)
 
     # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
-    contrast_df['S12i']=2*(index_df[delta_label1]*index_df[beta_label2]+index_df[delta_label2]*index_df[beta_label1])*(energy_fourth_term)
-    contrast_df['S13i']=2*(index_df[delta_label1]*index_df[beta_label3]+index_df[delta_label3]*index_df[beta_label1])*(energy_fourth_term)
-    contrast_df['S23i']=2*(index_df[delta_label2]*index_df[beta_label3]+index_df[delta_label3]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S12i']=2*(index_df[delta_label1]*index_df[beta_label2]-index_df[delta_label2]*index_df[beta_label1])*(energy_fourth_term)
+    contrast_df['S13i']=2*(index_df[delta_label1]*index_df[beta_label3]-index_df[delta_label3]*index_df[beta_label1])*(energy_fourth_term)
+    contrast_df['S23i']=2*(index_df[delta_label2]*index_df[beta_label3]-index_df[delta_label3]*index_df[beta_label2])*(energy_fourth_term)
 
 
     #Make transfer matrix M

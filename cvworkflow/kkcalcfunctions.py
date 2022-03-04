@@ -196,9 +196,9 @@ def make_contrast_M_3i(delta1, beta1, label1, delta2, beta2, label2, delta3, bet
     contrast_df['S23']=2*(index_df[delta_label2]*index_df[delta_label3]+index_df[beta_label2]*index_df[beta_label3])*(energy_fourth_term)
 
     # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
-    contrast_df['S12i']=2*(index_df[delta_label1]*index_df[beta_label2]-index_df[delta_label2]*index_df[beta_label1])*(energy_fourth_term)
-    contrast_df['S13i']=2*(index_df[delta_label1]*index_df[beta_label3]-index_df[delta_label3]*index_df[beta_label1])*(energy_fourth_term)
-    contrast_df['S23i']=2*(index_df[delta_label2]*index_df[beta_label3]-index_df[delta_label3]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S12i']=2*(index_df[delta_label2]*index_df[beta_label1]-index_df[delta_label1]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S13i']=2*(index_df[delta_label3]*index_df[beta_label1]-index_df[delta_label1]*index_df[beta_label3])*(energy_fourth_term)
+    contrast_df['S23i']=2*(index_df[delta_label3]*index_df[beta_label2]-index_df[delta_label2]*index_df[beta_label3])*(energy_fourth_term)
 
 
     #Make transfer matrix M
@@ -314,7 +314,51 @@ def make_contrast_M_2(delta1, beta1, label1, delta2, beta2, label2, new_q_index)
     M = np.array(M)
 
     #Make negative values 0 in scattering
-    M[M < 0] = 0
+    #M[M < 0] = 0
+    #Transpose to get columns of S11, S22, S33, S12, S13, S23
+    M = np.transpose(M)
+    return M
+
+def make_contrast_M_2i(delta1, beta1, label1, delta2, beta2, label2, new_q_index):
+    delta_label1 = 'delta_'+label1
+    delta_label2 = 'delta_'+label2
+    beta_label1 = 'beta_'+label1
+    beta_label2 = 'beta_'+label2
+
+    delta1_df, beta1_df = component_df(delta1, beta1, new_q_index, label1)
+    delta2_df, beta2_df = component_df(delta2, beta2, new_q_index, label2)
+
+    index_df = pd.DataFrame(delta1_df, columns=[delta_label1])
+    index_df.insert(1, delta_label2, delta2_df, True)
+    index_df.insert(2, beta_label1, beta1_df, True)
+    index_df.insert(3, beta_label2, beta2_df, True)
+    index_df.insert(4, beta_label1+'i', beta1_df, True)
+
+    contrast_df = index_df[[delta_label1, delta_label2, beta_label1]].copy(deep=True)
+    contrast_df.columns =['S11','S22','S12', 'S12i']
+    energy_fourth_term = contrast_df.index.values**4
+
+    # Self term: delta_i^2 + beta_i^2
+    contrast_df['S11']=(index_df[delta_label1]*index_df[delta_label1]+index_df[beta_label1]*index_df[beta_label1])*(energy_fourth_term)
+    contrast_df['S22']=(index_df[delta_label2]*index_df[delta_label2]+index_df[beta_label2]*index_df[beta_label2])*(energy_fourth_term)
+
+    # Cross term: 2(delta_i*delta_j + beta_i*beta_j)
+    contrast_df['S12']=2*(index_df[delta_label1]*index_df[delta_label2]+index_df[beta_label1]*index_df[beta_label2])*(energy_fourth_term)
+    contrast_df['S12i']=2*(index_df[delta_label2]*index_df[beta_label1]-index_df[delta_label1]*index_df[beta_label2])*(energy_fourth_term)
+
+    #Make transfer matrix M
+    M = []
+    for energy,contrasts in contrast_df.iterrows():
+        row = []
+        row.append(contrasts['S11'])
+        row.append(contrasts['S22'])
+        row.append(contrasts['S12'])
+        row.append(contrasts['S12i'])
+        M.append(row)
+    M = np.array(M)
+
+    #Make negative values 0 in scattering
+    #M[M < 0] = 0
     #Transpose to get columns of S11, S22, S33, S12, S13, S23
     M = np.transpose(M)
     return M

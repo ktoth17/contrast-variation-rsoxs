@@ -8,3 +8,4 @@ matplotlib
 scipy
 constrained-matrix-factorization
 kkcalc
+wxPython

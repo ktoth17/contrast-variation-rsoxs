@@ -8,3 +8,11 @@ matplotlib
 scipy
 constrained-matrix-factorization
 kkcalc
+pytest
+cython
+scipy
+sphinx
+sphinx-autobuild
+sphinx_rtd_theme
+nbsphinx
+pint

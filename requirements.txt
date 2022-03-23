@@ -25,3 +25,9 @@ pyfai
 scikit-image
 xarray
 tqdm
+cookiecutter
+ipython
+numpydoc
+pexpect
+pytest
+sphinx-copybutton

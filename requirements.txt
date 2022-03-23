@@ -16,3 +16,12 @@ sphinx-autobuild
 sphinx_rtd_theme
 nbsphinx
 pint
+versioneer
+astropy
+fabio
+h5py
+nodejs
+pyfai
+scikit-image
+xarray
+tqdm
